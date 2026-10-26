@@ -69,7 +69,7 @@
 <header class="nav">
   <a class="nav__brand glitch-hover" href="#top" data-text="GHD/SAPIENTIA">GHD/SAPIENTIA</a>
   <nav class="nav__index" aria-label="섹션">
-    <a href="#s01">01</a><a href="#s02">02</a><a href="#s03">03</a><a href="#s04">04</a><a href="#s05">05</a><a href="#s06">06</a><a href="#s07">07</a><a href="#s08">08</a><a href="#s09">09</a><a href="#s10">10</a><a href="#s11">11</a>
+    <a href="#s01">01</a><a href="#s02">02</a><a href="#s03">03</a><a href="#s04">04</a><a href="#s05">05</a><a href="#s06">06</a><a href="#s07">07</a><a href="#s08">08</a><a href="#s09">09</a><a href="#s10">10</a><a href="#s11">11</a><a href="#s12">12</a>
   </nav>
   <div class="nav__meta"><span class="dot"></span><span id="clock">00:00:00</span><span class="nav__loc">CONCORDIA</span>
     <button class="nav__sound" id="soundBtn" type="button" aria-pressed="false" aria-label="배경 음악 켜기/끄기"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span id="soundLabel">SOUND OFF</span></button>
@@ -366,7 +366,10 @@
     <h3 class="panic__title" data-fit><span class="glitch glitch--heavy" data-text="KERNEL PANIC">KERNEL PANIC</span></h3>
     <p class="panic__lead">시전자와 에러 큐브를 매개로 반경 100m 내의 공간에 네온 글리치와 노이즈를 동반한 거대한 시스템 붕괴 파동(System Crash Wave)을 방출한다.</p>
 
-    <button class="btn-trigger mono" id="panicBtn" type="button">&gt; execute kernel_panic --radius=100m</button>
+    <div class="panic__run">
+      <button class="btn-trigger mono" id="panicBtn" type="button">&gt; execute kernel_panic --radius=100m</button>
+      <span class="panic__status mono" id="panicStatus" aria-live="polite">idle &middot; 버튼을 눌러 붕괴 파동을 방출하세요</span>
+    </div>
 
     <div class="panic__split">
       <div class="panic__side">
@@ -504,14 +507,28 @@
       <!-- ============ 선관 링크 수정 끝 ============ -->
       <p class="link__quote">[ 쿠드랴, 뭔가 재밌는거 없어? ]</p>
       <dl class="link__meta mono">
-        <div><dt>11.2 &mdash; 지향 커플링</dt><dd>&minus;</dd></div>
-        <div><dt>11.4 &mdash; 추가 선관</dt><dd>원하시면 갠밴으로 연락 바랍니다.</dd></div>
+        <div><dt>11.2 &mdash; 추가 선관</dt><dd>원하시면 갠밴으로 연락 바랍니다.</dd></div>
       </dl>
     </div>
     <div class="link__body">
       <p class="mono card__idx">11.3 &mdash; Relation log</p>
       <p class="link__desc"> 화이트 해커 일을 하다가 알게된 사이. 규정 타령이나 하는 고지식함이 기가 차면서도, 그 원칙주의와 공간 도약 능력이 흥미로워 종종 커피를 들고 찾아간다. 매번 깐족대며 장난을 치지만, 녀석의 우직한 책임감은 확실히 신뢰한다.</p>
     </div>
+  </div>
+</section>
+
+<!-- ============ 12 COUPLING ============ -->
+<section class="sec" id="s12">
+  <header class="sec__head">
+    <span class="sec__num">12</span>
+    <span class="sec__paren">(Coupling)</span>
+    <h2 class="sec__title scramble">지향 커플링</h2>
+  </header>
+
+  <div class="coupling">
+    <p class="mono card__idx">12.1 &mdash; Preferred coupling</p>
+    <p class="coupling__v" aria-label="없음">&minus;</p>
+    <p class="mono coupling__note">// 지정 없음</p>
   </div>
 </section>
 
@@ -539,6 +556,9 @@
 
 </main>
 
+<!-- KERNEL PANIC 연출용 (버튼을 누를 때만 그려짐) -->
+<canvas class="crashfx" id="crashFx" aria-hidden="true"></canvas>
+<div class="crashdump mono" id="crashDump" aria-hidden="true"><p class="crashdump__k">*** STOP: 0x0000DEAD &mdash; KERNEL_PANIC</p><p class="crashdump__t">SYSTEM CRASH WAVE</p><p class="crashdump__r">radius <b id="crashR">000</b>m / 100m</p><p class="crashdump__l">allies &rarr; rollback &middot; enemies &rarr; inject</p></div>
 <script src="assets/main.js"></script>
 </body>
 </html>
