@@ -224,7 +224,7 @@
   }
 
   /* ---------- reveal ---------- */
-  const revealTargets = $$(".sec__head, .ident > *, .look > *, .persona__keys, .hp, .card, .lhs__col, .stats > *, .skill, .panic > *, .hotfix > *, .trait, .inv__item, .link > *, .oath__label");
+  const revealTargets = $$(".sec__head, .ident > *, .look > *, .persona__keys, .hp, .card, .lhs__col, .stats > *, .skill, .panic > *, .hotfix > *, .trait, .inv__item, .link > *, .coupling, .oath__label");
   revealTargets.forEach(el => el.classList.add("rv"));
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -287,13 +287,121 @@
     portrait.addEventListener("mouseleave", () => portrait.classList.remove("is-glitching"));
   }
 
-  /* ---------- kernel panic trigger ---------- */
-  $("#panicBtn").addEventListener("click", () => {
-    if (reduce) return;
-    document.body.classList.remove("is-crash");
-    void document.body.offsetWidth;
-    document.body.classList.add("is-crash");
-    setTimeout(() => document.body.classList.remove("is-crash"), 950);
+  /* ---------- kernel panic trigger ----------
+     typing → crash wave (glitch rings + error fragments + noise bands, full screen)
+     → crash dump box → 7.1 allies ROLLBACK / 7.2 enemies INJECT stamps */
+  const panicBtn = $("#panicBtn"), panicStatus = $("#panicStatus");
+  const fx = $("#crashFx"), fxg = fx.getContext("2d"), dump = $("#crashDump"), crashR = $("#crashR");
+  const sides = $$(".panic__side"), BTN_LABEL = panicBtn.innerHTML;
+  const GLYPHS = ["0xDEAD", "SIGKILL", "NULL", "ERR", "0x00", "SEGFAULT", "PANIC", "//", "0xFF", "OVERFLOW", "#!", "RST", "0xC0DE", "λ", "!!"];
+  let panicBusy = false, actx = null;
+  function crashSound() {           // short bit-crushed noise burst (only when SOUND ON)
+    if (!soundOn) return;
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      const len = actx.sampleRate * .7, buf = actx.createBuffer(1, len, actx.sampleRate), d = buf.getChannelData(0);
+      let hold = 0, v = 0;
+      for (let i = 0; i < len; i++) { if (hold-- <= 0) { v = Math.random() * 2 - 1; hold = 6 + (Math.random() * 30 | 0); } d[i] = v * Math.pow(1 - i / len, 2); }
+      const s = actx.createBufferSource(), f = actx.createBiquadFilter(), g = actx.createGain();
+      f.type = "bandpass"; f.frequency.value = 900; f.Q.value = .7; g.gain.value = .32;
+      s.buffer = buf; s.connect(f); f.connect(g); g.connect(actx.destination); s.start();
+      const o = actx.createOscillator(), og = actx.createGain();
+      o.type = "square"; o.frequency.setValueAtTime(220, actx.currentTime); o.frequency.exponentialRampToValueAtTime(40, actx.currentTime + .5);
+      og.gain.setValueAtTime(.08, actx.currentTime); og.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + .55);
+      o.connect(og); og.connect(actx.destination); o.start(); o.stop(actx.currentTime + .6);
+    } catch (e) {}
+  }
+  function typeOut(text, done) {
+    let i = 0;
+    const step = () => { panicBtn.textContent = text.slice(0, ++i) + (i < text.length ? "_" : ""); if (i < text.length) setTimeout(step, 14); else done(); };
+    step();
+  }
+  function crashWave() {
+    const DPR = Math.min(2, window.devicePixelRatio || 1), W = innerWidth, H = innerHeight;
+    fx.width = W * DPR; fx.height = H * DPR; fx.classList.add("is-on");
+    const b = panicBtn.getBoundingClientRect(), cx = b.left + b.width / 2, cy = b.top + b.height / 2;
+    const maxR = Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy)) + 60;
+    const parts = Array.from({ length: W < 600 ? 40 : 80 }, () => {
+      const a = Math.random() * Math.PI * 2, sp = 260 + Math.random() * 760;
+      return { x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, t: GLYPHS[(Math.random() * GLYPHS.length) | 0],
+        c: Math.random() < .5 ? "62,224,143" : Math.random() < .6 ? "255,63,164" : "236,235,230", s: 10 + Math.random() * 10, d: Math.random() * .25 };
+    });
+    let jit = [], t0 = performance.now(), last = t0;
+    const ring = (r, col, ox, w, a) => {
+      if (r <= 0) return;
+      fxg.strokeStyle = `rgba(${col},${a})`; fxg.lineWidth = w; fxg.beginPath();
+      for (let k = 0; k <= 96; k++) {
+        const ang = k / 96 * Math.PI * 2, rr = r + (jit[k % 96] || 0);
+        const x = cx + ox + Math.cos(ang) * rr, y = cy + Math.sin(ang) * rr;
+        k ? fxg.lineTo(x, y) : fxg.moveTo(x, y);
+      }
+      fxg.stroke();
+    };
+    const frame = now => {
+      const t = (now - t0) / 1000, dt = Math.min(.05, (now - last) / 1000); last = now;
+      fxg.setTransform(DPR, 0, 0, DPR, 0, 0); fxg.clearRect(0, 0, W, H);
+      if ((now | 0) % 3 === 0 || !jit.length) jit = Array.from({ length: 96 }, () => (Math.random() < .18 ? (Math.random() - .5) * 46 : (Math.random() - .5) * 6));
+      const e1 = 1 - Math.pow(1 - Math.min(1, t / .9), 3), e2 = 1 - Math.pow(1 - Math.max(0, Math.min(1, (t - .15) / .95)), 3);
+      const fade = Math.max(0, 1 - t / 1.25);
+      /* noise bands sweeping the screen */
+      if (t < .75) for (let k = 0; k < 7; k++) {
+        const y = Math.random() * H, h = 2 + Math.random() * 26;
+        fxg.fillStyle = `rgba(${Math.random() < .5 ? "62,224,143" : "255,63,164"},${(.08 + Math.random() * .16).toFixed(2)})`;
+        fxg.fillRect(0, y, W, h);
+        if (Math.random() < .4) { fxg.fillStyle = "rgba(236,235,230,.18)"; fxg.fillRect(Math.random() * W, y, 40 + Math.random() * 220, 2); }
+      }
+      /* shockwave: RGB-split glitch rings */
+      fxg.globalCompositeOperation = "lighter";
+      ring(e1 * maxR, "255,63,164", -6, 3, (fade * .9).toFixed(3));
+      ring(e1 * maxR, "62,224,143", 6, 3, (fade * .9).toFixed(3));
+      ring(e1 * maxR, "236,235,230", 0, 1.2, fade.toFixed(3));
+      ring(e2 * maxR * .82, "62,224,143", 0, 1, (fade * .6).toFixed(3));
+      /* inner glow at the origin */
+      if (t < .5) { const gr = fxg.createRadialGradient(cx, cy, 0, cx, cy, 220 * (1 - t)); gr.addColorStop(0, `rgba(255,63,164,${(.5 * (1 - t * 2)).toFixed(3)})`); gr.addColorStop(1, "rgba(255,63,164,0)"); fxg.fillStyle = gr; fxg.fillRect(cx - 240, cy - 240, 480, 480); }
+      /* error fragments */
+      fxg.textAlign = "center";
+      for (const p of parts) {
+        if (t < p.d) continue;
+        p.x += p.vx * dt; p.y += p.vy * dt; p.vx *= .97; p.vy *= .97;
+        const a = Math.max(0, 1 - (t - p.d) / 1.1);
+        fxg.font = `700 ${p.s}px "JetBrains Mono", monospace`;
+        fxg.fillStyle = `rgba(${p.c},${a.toFixed(3)})`; fxg.fillText(p.t, p.x, p.y);
+      }
+      fxg.globalCompositeOperation = "source-over";
+      crashR.textContent = String(Math.round(Math.min(1, t / .9) * 100)).padStart(3, "0");
+      if (t < 1.35) requestAnimationFrame(frame); else { fxg.clearRect(0, 0, W, H); fx.classList.remove("is-on"); }
+    };
+    requestAnimationFrame(frame);
+  }
+  function stamp(side, text) {
+    let s = $(".panic__stamp", side);
+    if (!s) { s = document.createElement("span"); s.className = "panic__stamp"; side.appendChild(s); }
+    s.textContent = text; s.classList.remove("is-on"); void s.offsetWidth; s.classList.add("is-on");
+  }
+  panicBtn.addEventListener("click", () => {
+    if (panicBusy) return;
+    panicBusy = true; panicBtn.disabled = true; panicBtn.classList.add("is-running");
+    panicStatus.className = "panic__status mono is-hot"; panicStatus.textContent = "executing…";
+    sides.forEach(s => { s.classList.remove("is-rollback", "is-inject"); const st = $(".panic__stamp", s); if (st) st.classList.remove("is-on"); });
+    typeOut("> kernel_panic --radius=100m ... SYSTEM CRASH WAVE", () => {
+      crashSound();
+      if (!reduce) {
+        crashWave();
+        dump.classList.remove("is-on"); void dump.offsetWidth; dump.classList.add("is-on");
+        document.body.classList.remove("is-crash"); void document.body.offsetWidth; document.body.classList.add("is-crash");
+        setTimeout(() => document.body.classList.remove("is-crash"), 950);
+      } else { crashR.textContent = "100"; }
+      panicStatus.textContent = "crash wave · r = 100m";
+      setTimeout(() => {
+        if (sides[0]) { sides[0].classList.add("is-rollback"); stamp(sides[0], "ROLLBACK · 상태이상 해제"); }
+        if (sides[1]) { sides[1].classList.add("is-inject"); stamp(sides[1], "CANCELLED · 1 ROUND LAG"); }
+        panicStatus.className = "panic__status mono is-ok"; panicStatus.textContent = "아군 롤백 완료 · 적군 행동 강제 캔슬";
+      }, reduce ? 0 : 1050);
+      setTimeout(() => {
+        panicBtn.innerHTML = BTN_LABEL; panicBtn.disabled = false; panicBtn.classList.remove("is-running"); panicBusy = false;
+        if (sides[1]) sides[1].classList.remove("is-inject");
+      }, reduce ? 300 : 3200);
+    });
   });
 
   /* ---------- hotfix simulator ----------
