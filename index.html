@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DMITRI // SAPIENTIA-26</title>
+<meta name="description" content="Grand Harmony Directorate 사피엔티아 입단 신청서 — 드미트리 드미트리예비치 쇼스타코비치">
+<meta property="og:title" content="DMITRI // SAPIENTIA-26">
+<meta property="og:description" content="버그 없는 코드는 없습니다. — Grand Harmony Directorate 사피엔티아 입단 신청서">
+<!-- 미리보기 그림: 사이트 주소가 정해지면 content를 전체 주소로 바꾸면 더 확실하다 (예: https://아이디.github.io/저장소/assets/og.png) -->
+<meta property="og:image" content="assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ============ PHOTOSENSITIVITY + AUDIO WARNING ============ -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle" aria-describedby="gateText gateSoundText">
+  <div class="gate__box">
+    <p class="gate__kicker mono"><span class="gate__tag">[WARN]</span> photosensitivity &amp; audio</p>
+    <h2 class="gate__title" id="gateTitle">광과민성 발작 주의</h2>
+    <p class="gate__text" id="gateText">이 페이지에는 깜빡이는 빛, 색이 반전되며 화면이 흔들리는 효과(특수능력 섹션의 KERNEL PANIC 버튼), 글리치와 노이즈처럼 빠르게 움직이는 그래픽이 포함되어 있습니다. 광과민성 뇌전증이 있거나 빛과 움직임에 민감하다면 주의해 주세요. 보는 도중 어지럽거나 불편하면 바로 창을 닫아 주세요.</p>
+    <div class="gate__sound">
+      <p class="gate__sub mono">&gt; audio_output: enabled</p>
+      <p class="gate__text" id="gateSoundText">이 페이지에는 배경 음악이 나옵니다. 들어가기 전에 기기의 소리를 줄여 주세요. 소리 없이 보고 싶다면 &lsquo;소리 끄고 보기&rsquo;를 누르세요. 들어간 뒤에도 오른쪽 위 SOUND 버튼으로 언제든 켜고 끌 수 있습니다.</p>
+    </div>
+    <p class="gate__hint mono">&gt; 이 페이지 곳곳에 능력의 흔적이 숨어 있습니다. 찾아보세요.</p>
+    <div class="gate__timer mono" aria-live="polite">
+      <div class="gate__bar"><span id="gateBar"></span></div>
+      <span id="gateStatus">경고 확인 중 &hellip; 3</span>
+    </div>
+    <div class="gate__actions" id="gateActions">
+      <button class="gate__btn gate__btn--primary" id="gateEnter" type="button" disabled>소리 켜고 보기</button>
+      <button class="gate__btn" id="gateMute" type="button" disabled>소리 끄고 보기</button>
+      <button class="gate__btn gate__btn--ghost" id="gateDecline" type="button">웹사이트 보지 않기</button>
+    </div>
+    <div class="gate__alt" id="gateAlt" hidden>
+      <p class="gate__text">웹사이트 대신 같은 내용을 문서로 볼 수 있습니다.</p>
+      <a class="gate__btn gate__btn--primary" id="gateDoc" href="https://docs.google.com/document/d/1mQiWOn0bs2Uu2od8ZSqLZsz_IyLvNOOZQxRkrFOKN-I/edit?usp=sharing" target="_blank" rel="noopener">구글 독스로 본문 보기 &#8599;</a>
+      <button class="gate__back mono" id="gateBack" type="button">&larr; 경고로 돌아가기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 배경 음악: assets/bgm.mp3 파일을 넣으면 재생된다 (파일 이름을 바꾸려면 src만 고치면 됨) -->
+<audio id="bgm" src="assets/bgm.mp3" loop preload="auto"></audio>
+
+<!-- ============ BOOT LOADER ============ -->
+<div class="boot" id="boot" aria-hidden="true">
+  <div class="boot__mark"><img src="assets/sapientia_symbol.png" alt=""><span>SAPIENTIA<br>사피엔티아</span></div>
+  <pre class="boot__log" id="bootLog"></pre>
+  <div class="boot__bar"><span id="bootBar"></span></div>
+  <div class="boot__pct" id="bootPct">000</div>
+</div>
+
+<div class="fx-scan" aria-hidden="true"></div>
+<div class="fx-noise" aria-hidden="true"></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <a class="nav__brand glitch-hover" href="#top" data-text="GHD/SAPIENTIA">GHD/SAPIENTIA</a>
+  <nav class="nav__index" aria-label="섹션">
+    <a href="#s01">01</a><a href="#s02">02</a><a href="#s03">03</a><a href="#s04">04</a><a href="#s05">05</a><a href="#s06">06</a><a href="#s07">07</a><a href="#s08">08</a><a href="#s09">09</a><a href="#s10">10</a><a href="#s11">11</a>
+  </nav>
+  <div class="nav__meta"><span class="dot"></span><span id="clock">00:00:00</span><span class="nav__loc">CONCORDIA</span>
+    <button class="nav__sound" id="soundBtn" type="button" aria-pressed="false" aria-label="배경 음악 켜기/끄기"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span id="soundLabel">SOUND OFF</span></button>
+  </div>
+</header>
+
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" aria-label="표지">
+  <div class="hero__grid">
+    <div class="hero__label mono"><img class="faction-mark" src="assets/sapientia_symbol.png" alt="" aria-hidden="true" width="22" height="22">(Application)&nbsp;&nbsp;No.&nbsp;026 &mdash; Sapientia Division &middot; 사피엔티아</div>
+
+    <h1 class="hero__title" data-fit>
+      <span class="glitch" data-text="DMITRI">DMITRI</span>
+    </h1>
+    <p class="hero__cyr mono">Дмитрий Дмитриевич Шостакович</p>
+
+    <figure class="hero__portrait">
+      <div class="portrait" id="portrait">
+        <img src="assets/profile.png" alt="드미트리 프로필 그림. 베이지색 머리, 녹색 눈, 검은 작업복 차림의 치비 캐릭터" width="600" height="600">
+        <img class="portrait__ghost portrait__ghost--a" src="assets/profile.png" alt="" aria-hidden="true">
+        <img class="portrait__ghost portrait__ghost--b" src="assets/profile.png" alt="" aria-hidden="true">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      </div>
+      <figcaption class="mono">IMG_0x26.PNG &middot; TEMP &middot; art @NUEH_NANA</figcaption>
+    </figure>
+
+    <ol class="hero__index mono">
+      <li><span>A.1</span><span>Talent</span><b>핫픽스 블록</b></li>
+      <li><span>A.2</span><span>Special</span><b>커널 패닉</b></li>
+      <li><span>A.3</span><span>Origin</span><b>구 러시아 연방</b></li>
+      <li><span>A.4</span><span>Birth</span><b>05.09 &middot; A</b></li>
+    </ol>
+
+    <div class="hero__tag">
+      <p class="mono hero__bracket">[ 버그 없는 코드는 없습니다. ]</p>
+      <blockquote class="hero__quote">&ldquo;보안 패치 좀 하라고 석 달 전부터 말씀드렸을 텐데요. 덕분에 오늘 제 커피가 세 잔째입니다.&rdquo;</blockquote>
+    </div>
+
+    <dl class="hero__specs mono">
+      <div><dt>Sex</dt><dd>남성</dd></div>
+      <div><dt>Age</dt><dd>26</dd></div>
+      <div><dt>H/W</dt><dd>168 / 65</dd></div>
+      <div><dt>Faction</dt><dd>사피엔티아</dd></div>
+    </dl>
+
+    <div class="hero__scroll mono">scroll &darr; <span class="blink">_</span></div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>SEGFAULT &#9670; HOTFIX BLOCK &#9670; KERNEL PANIC &#9670; SIGKILL &#9670; BUFFER OVERFLOW &#9670; NULL POINTER &#9670; PARITY SHIELD &#9670;&nbsp;</span>
+      <span>SEGFAULT &#9670; HOTFIX BLOCK &#9670; KERNEL PANIC &#9670; SIGKILL &#9670; BUFFER OVERFLOW &#9670; NULL POINTER &#9670; PARITY SHIELD &#9670;&nbsp;</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FACTION ============ -->
+<section class="sapientia" aria-label="소속 진영 사피엔티아">
+  <div class="sapientia__inner">
+    <img class="sapientia__logo" src="assets/sapientia_symbol.png" alt="사피엔티아 문장. 은빛 고리 위에 펼친 파란 책과 깃펜" width="600" height="600">
+    <div class="sapientia__text">
+      <p class="mono sapientia__cap">(Faction) &mdash; Grand Harmony Directorate</p>
+      <p class="sapientia__name" data-fit><span>SAPIENTIA</span></p>
+      <p class="sapientia__ko">사피엔티아</p>
+      <p class="mono sapientia__note">소속 진영 &middot; Applicant No. 026</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 IDENTITY ============ -->
+<section class="sec" id="s01">
+  <header class="sec__head">
+    <span class="sec__num">01</span>
+    <span class="sec__paren">(Identity)</span>
+    <h2 class="sec__title scramble">신원 정보</h2>
+  </header>
+
+  <div class="ident">
+    <div class="ident__name">
+      <p class="ident__ko">드미트리 드미트리예비치<br>쇼스타코비치</p>
+      <p class="mono ident__call">callsign &rarr; <b>드미트리</b></p>
+      <div class="idcard mono" aria-hidden="true">
+        <div class="idcard__row"><span>GHD-ID</span><span>SAP-026-0509</span></div>
+        <div class="idcard__row"><span>DIV</span><span>SAPIENTIA</span></div>
+        <div class="idcard__code"></div>
+        <div class="idcard__row dim"><span>ШОСТАКОВИЧ&lt;&lt;ДМИТРИЙ&lt;&lt;&lt;</span></div>
+      </div>
+      <div class="faction">
+        <img class="faction__logo" src="assets/sapientia_symbol.png" alt="사피엔티아 문장. 은빛 고리 위에 펼친 파란 책과 깃펜" width="96" height="96">
+        <div>
+          <p class="mono faction__cap">Faction</p>
+          <p class="faction__en">SAPIENTIA</p>
+          <p class="faction__ko">사피엔티아</p>
+        </div>
+      </div>
+    </div>
+    <table class="ident__table mono">
+      <tbody>
+        <tr><th>1.1</th><td>Name</td><td>드미트리 드미트리예비치 쇼스타코비치</td></tr>
+        <tr><th>1.2</th><td>Sex</td><td>남성</td></tr>
+        <tr><th>1.3</th><td>Age</td><td>26</td></tr>
+        <tr><th>1.4</th><td>Height / Weight</td><td>168 cm / 65 kg</td></tr>
+        <tr><th>1.5</th><td>Faction</td><td>사피엔티아</td></tr>
+        <tr><th>1.6</th><td>Birthday</td><td>5월 9일</td></tr>
+        <tr><th>1.7</th><td>Blood</td><td>A형</td></tr>
+        <tr><th>1.8</th><td>Origin</td><td>구 러시아 연방 지역 출신 (재건 후 Concordia 대륙 거주)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 02 APPEARANCE ============ -->
+<section class="sec" id="s02">
+  <header class="sec__head">
+    <span class="sec__num">02</span>
+    <span class="sec__paren">(Appearance)</span>
+    <h2 class="sec__title scramble">외관</h2>
+  </header>
+
+  <div class="look">
+    <ul class="look__swatches mono">
+      <li><i style="--c:#e9dcb6"></i><span>2.1 Hair</span><b>Beige, 헝클어진</b></li>
+      <li><i style="--c:#2fb36a"></i><span>2.2 Eyes</span><b>Emerald</b></li>
+      <li><i style="--c:#f3ede6"></i><span>2.3 Skin</span><b>Pale</b></li>
+      <li><i style="--c:#141414"></i><span>2.4 Scar</span><b>R. temple, black</b></li>
+    </ul>
+    <p class="look__text">
+      정리되지 않아 이마와 귀를 덮은 헝클어진 베이지색 머리칼 사이로 날카롭고 서구적인 이목구비가 드러난다. 늘 어둠속에 살아서 핏기 없이 창백한 피부톤을 띠고 있으며, 선명한 <em>에메랄드빛 녹안</em> 아래로는 짙은 다크서클이 내려앉아 피로감이 묻어난다. 얼굴 오른쪽 상단, 이마 관자놀이 부근에서 헤어라인 안쪽까지 굵게 긁힌 <em>검은색 흉터</em>가 남아 있다. 168cm의 왜소한 체격에 오랜 실내 작업과 컴퓨터 사용으로 인한 만성적인 거북목 때문에 실제보다 키가 더 작아 보이며, 어깨를 살짝 움츠린 자세가 굳어져 있다.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 03 PERSONALITY ============ -->
+<section class="sec" id="s03">
+  <header class="sec__head">
+    <span class="sec__num">03</span>
+    <span class="sec__paren">(Personality)</span>
+    <h2 class="sec__title scramble">성격</h2>
+  </header>
+
+  <p class="persona__keys">쾌락주의 <span>/</span> 장난끼 많은 <span>/</span> 팔랑귀</p>
+
+  <div class="persona">
+    <article class="card">
+      <p class="card__idx mono">3.1 &mdash; Hedonist</p>
+      <h3 class="card__title">순간의 재미와 자극을 좇는 쾌락주의자</h3>
+      <p>골치 아픈 대의명분이나 사명감보다는 '지금 당장 내 흥미를 끄는가'와 '재미있는가'가 행동의 제1원칙이다. 엄숙한 상황에서도 실없는 농담을 던져 긴장을 깨뜨리거나 피식 웃어넘기며, 고통스럽거나 지루한 현실을 회피하기 위해 자극적인 유희거리를 찾아다닌다.</p>
+    </article>
+    <article class="card">
+      <p class="card__idx mono">3.2 &mdash; Prankster</p>
+      <h3 class="card__title">빈정거림과 짓궂음이 밴 장난꾸러기</h3>
+      <p>상대를 얕보거나 골탕 먹이려는 악의는 없지만, 남의 반응을 관찰하는 것을 즐겨 짓궂은 장난을 치거나 일부러 말꼬투리를 잡으며 깐족거린다. 타인의 사소한 허점이나 시스템의 취약점을 보면 그냥 지나치지 못하고 툭툭 건드려보는 악동 기질이 다분하다.</p>
+    </article>
+    <article class="card">
+      <p class="card__idx mono">3.3 &mdash; Pushover</p>
+      <h3 class="card__title">논리적 설득과 돈 앞에 무너지는 얇은 귀</h3>
+      <p>매사에 시니컬하고 툴툴거리면서도, 상대가 그럴듯한 데이터와 완벽한 인과관계로 설득해 오면 "…듣고 보니 또 맞네?" 하고 어이없을 만큼 쉽게 수긍해버린다. 특히 '비싼 장비 지원'이나 '금전적 보상'이 걸려 있는 제안에는 겉으로 투덜대면서도 순식간에 마음을 돌려버리는 탓에 종종 주변 사람들에게 이용당하거나 말려들기 십상이다.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 04 L/H/S ============ -->
+<section class="sec" id="s04">
+  <header class="sec__head">
+    <span class="sec__num">04</span>
+    <span class="sec__paren">(Like / Hate / Scare)</span>
+    <h2 class="sec__title scramble">L / H / S</h2>
+  </header>
+
+  <div class="lhs">
+    <div class="lhs__col">
+      <p class="lhs__letter">L</p>
+      <p class="mono lhs__cap">4.1 &mdash; Like</p>
+      <ul><li>비싼 장비</li><li>논리가 완벽한 말</li><li>돈</li></ul>
+    </div>
+    <div class="lhs__col">
+      <p class="lhs__letter">H</p>
+      <p class="mono lhs__cap">4.2 &mdash; Hate</p>
+      <ul><li>물</li><li>빨간색</li><li>그림이 없는 글</li></ul>
+    </div>
+    <div class="lhs__col lhs__col--s">
+      <p class="lhs__letter glitch" data-text="S">S</p>
+      <p class="mono lhs__cap">4.3 &mdash; Scare</p>
+      <ul><li>설명 / 이해가 안 되는 현상</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 STATS ============ -->
+<section class="sec" id="s05">
+  <header class="sec__head">
+    <span class="sec__num">05</span>
+    <span class="sec__paren">(Benchmark)</span>
+    <h2 class="sec__title scramble">능력치</h2>
+  </header>
+
+  <div class="hp" role="img" aria-label="총체력 290: 기본 체력 200, 추가 체력 90">
+    <div class="hp__head">
+      <p class="mono hp__idx">5.0 &mdash; Total HP</p>
+      <p class="hp__name">총체력</p>
+      <p class="hp__num">290</p>
+    </div>
+    <div class="hp__bar" aria-hidden="true"><i class="hp__base"></i><i class="hp__bonus"></i></div>
+    <p class="mono hp__legend"><span><i class="hp__dot hp__dot--base"></i>기본 체력 200</span><span>+</span><span><i class="hp__dot hp__dot--bonus"></i>추가 체력 90</span></p>
+  </div>
+
+  <div class="stats">
+    <svg class="radar" viewBox="-130 -130 260 260" role="img" aria-label="능력치 육각 그래프: 추가 체력 90, 공격력 10, 방어력 90, 민첩성 50, 정확성 10, 정신력 70">
+      <g class="radar__grid"></g>
+      <polygon class="radar__shape" points="0,0 0,0 0,0 0,0 0,0 0,0"></polygon>
+      <g class="radar__labels mono"></g>
+    </svg>
+
+    <ul class="bars mono" id="bars">
+      <li data-v="90"><span>5.1</span><span>추가 체력</span><span class="bar"><i></i></span><b>90</b></li>
+      <li data-v="10"><span>5.2</span><span>공격력</span><span class="bar"><i></i></span><b>10</b></li>
+      <li data-v="90"><span>5.3</span><span>방어력</span><span class="bar"><i></i></span><b>90</b></li>
+      <li data-v="50"><span>5.4</span><span>민첩성</span><span class="bar"><i></i></span><b>50</b></li>
+      <li data-v="10"><span>5.5</span><span>정확성</span><span class="bar"><i></i></span><b>10</b></li>
+      <li data-v="70"><span>5.6</span><span>정신력</span><span class="bar"><i></i></span><b>70</b></li>
+    </ul>
+  </div>
+  <p class="mono stats__note">// total HP 290 = base 200 + bonus 90 &middot; allocated 320 &middot; build: TANK / SUPPORT &middot; low ATK, low ACC by design</p>
+</section>
+
+<!-- ============ 06 SKILLS ============ -->
+<section class="sec" id="s06">
+  <header class="sec__head">
+    <span class="sec__num">06</span>
+    <span class="sec__paren">(Subroutines)</span>
+    <h2 class="sec__title scramble">기술</h2>
+  </header>
+
+  <div class="skills">
+    <details class="skill" open>
+      <summary>
+        <span class="mono skill__no">6.1</span>
+        <span class="skill__type mono">DEF</span>
+        <span class="skill__name">서브루틴: 패리티 쉴드</span>
+        <span class="skill__tags mono"><em>방어/에너지</em><em>#도발</em></span>
+        <span class="skill__toggle" aria-hidden="true"></span>
+      </summary>
+      <p>가상현실 장갑을 조작해 전면에 압축된 홀로그램 형태의 육각형 데이터 장벽을 전개한다. 정면에서 날아오는 물리적·에너지 투사체 궤적을 왜곡시켜 시전자 및 바로 뒤 아군을 보호한다.</p>
+    </details>
+    <details class="skill">
+      <summary>
+        <span class="mono skill__no">6.2</span>
+        <span class="skill__type mono">ATK</span>
+        <span class="skill__name">널 포인터: 렉 스파이크</span>
+        <span class="skill__tags mono"><em>공격/특수</em><em>#광역</em></span>
+        <span class="skill__toggle" aria-hidden="true"></span>
+      </summary>
+      <p>지면의 접점 좌표에 순간적인 데이터 과부하 신호를 주입해 바닥을 강하게 파열시킨다. 솟구치는 파편과 정전기 충격으로 전방의 적에게 충격을 주며 자세를 무너뜨린다.</p>
+    </details>
+    <details class="skill">
+      <summary>
+        <span class="mono skill__no">6.3</span>
+        <span class="skill__type mono">ATK</span>
+        <span class="skill__name">버퍼 오버플로우</span>
+        <span class="skill__tags mono"><em>공격/에너지</em><em>#연격</em></span>
+        <span class="skill__toggle" aria-hidden="true"></span>
+      </summary>
+      <p>휴대 단말의 잉여 연산 데이터를 불안정한 파편 형태로 뭉쳐 전방으로 비산시킨다. 정확도는 떨어지지만 다량의 네온빛 데이터 파편이 산탄처럼 퍼져 적의 접근을 차단하고 찰과상을 입힌다.</p>
+    </details>
+    <details class="skill">
+      <summary>
+        <span class="mono skill__no">6.4</span>
+        <span class="skill__type mono">ATK</span>
+        <span class="skill__name">강제 종료 신호(SIGKILL)</span>
+        <span class="skill__tags mono"><em>공격/특수</em><em>#회복</em></span>
+        <span class="skill__toggle" aria-hidden="true"></span>
+      </summary>
+      <p>가상현실 장갑의 전도성 패널에 순간적으로 고전압 펄스를 모아 근접한 적의 급소나 무구에 직접 꽂아 넣는다. 공격력 수치가 낮아 치명상을 입히지는 못하나, 강한 감전 경련을 유발해 적의 행동을 순간적으로 끊어낸다.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============ 07 KERNEL PANIC ============ -->
+<section class="sec sec--panic" id="s07">
+  <div class="panic__bg" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <pre class="panic__hex mono" aria-hidden="true" id="panicHex"></pre>
+  <header class="sec__head">
+    <span class="sec__num">07</span>
+    <span class="sec__paren">(Special)</span>
+    <h2 class="sec__title scramble">특수능력</h2>
+  </header>
+
+  <div class="panic">
+    <p class="mono panic__err">FATAL EXCEPTION 0x0000DEAD &mdash; system crash wave / r = 100m &middot; 속성: 특수</p>
+    <h3 class="panic__title" data-fit><span class="glitch glitch--heavy" data-text="KERNEL PANIC">KERNEL PANIC</span></h3>
+    <p class="panic__lead">시전자와 에러 큐브를 매개로 반경 100m 내의 공간에 네온 글리치와 노이즈를 동반한 거대한 시스템 붕괴 파동(System Crash Wave)을 방출한다.</p>
+
+    <button class="btn-trigger mono" id="panicBtn" type="button">&gt; execute kernel_panic --radius=100m</button>
+
+    <div class="panic__split">
+      <div class="panic__side">
+        <p class="mono panic__h">7.1 &mdash; 아군 영향 &middot; 시스템 롤백 / 정화</p>
+        <ul>
+          <li>파동에 닿은 아군의 뇌파 및 감각 데이터를 직전의 안정된 체크포인트로 강제 복구(롤백)한다.</li>
+          <li><b>공포, 패닉, 광기, 환각, 세뇌, 도발 등 일체의 감정 및 정신계 상태이상을 즉시 해제</b>한다.</li>
+          <li class="dim">단, 손상된 신체 결손이나 감소한 체력은 전혀 회복되지 않는다.</li>
+        </ul>
+      </div>
+      <div class="panic__side">
+        <p class="mono panic__h">7.2 &mdash; 적군 영향 &middot; 연산 오류 강제 주입 / 무력화</p>
+        <ul>
+          <li>범위 내 적들의 중추신경계와 감각 기관에 미처리된 치명적 에러 파편을 강제로 주입한다.</li>
+          <li>적들이 시전 중이거나 준비 중이던 모든 행동 및 스킬을 <b>즉시 강제 캔슬</b>시킨다.</li>
+          <li>1라운드 동안 극심한 감각 마비와 전신 렉(경련)을 유발해 행동 불능에 준하는 치명적인 이동/판정 페널티를 부여하며 고정 내부 충격 피해를 입힌다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 HOTFIX BLOCK ============ -->
+<section class="sec" id="s08">
+  <header class="sec__head">
+    <span class="sec__num">08</span>
+    <span class="sec__paren">(Talent)</span>
+    <h2 class="sec__title scramble">발현 능력</h2>
+  </header>
+
+  <div class="hotfix">
+    <div class="hotfix__info">
+      <h3 class="hotfix__name">핫픽스 블록</h3>
+      <p class="mono hotfix__en">HOTFIX_BLOCK.exe</p>
+      <p class="hotfix__summary">고의로 에러를 일으켜 만든 큐브를 투척해 직경 10m 내 아군 피해 경감 및 치유. 미초기화 연속 사용 2회마다 직경 1m씩 축소(최소 4m). 리셋 시 5분간 완전 무방비.</p>
+      <p class="hotfix__detail">시야 내 목표 지점에 시스템 연산 오류를 고의로 유도·압축해 만든 <em class="pink">네온 핑크빛 에러큐브</em>를 투척한다. 지면에 안착 시 큐브가 뿜어내는 데이터 왜곡을 통해 직경 10m의 필드를 형성하여, 내부 아군의 신체 손상을 데이터 복원 형태로 치유하고 받는 피해를 경감한다. 필드는 사용 후 강제로 유발한 오류 데이터를 정리하는 5분간의 수동 리셋(재부팅)을 거쳐야 초기화되며, 이 시간 동안 시전자는 어떠한 행동도 취하지 못하는 완전 무방비 상태가 된다. 리셋 없이 연속으로 큐브를 전개할 시, 미처리된 에러 파편의 간섭으로 시전자에게 급격한 감정 기복이 발생하며, 연속 2회 사용할 때마다 필드의 직경이 1m씩 점진적으로 감소해 최종적으로 직경 4m까지 축소된다.</p>
+    </div>
+
+    <div class="sim" id="sim">
+      <div class="sim__screen" id="simScreen">
+        <div class="sim__ghost" id="simGhost" aria-hidden="true"><span>10m</span></div>
+        <div class="sim__field" id="simField"><span class="sim__cube"></span></div>
+        <span class="sim__throw" id="simThrow" aria-hidden="true"></span>
+        <span class="sim__me mono" style="--x:12;--y:70" aria-hidden="true"><i></i>YOU</span>
+        <button class="sim__ally mono" type="button" style="--x:30;--y:34" data-ally="A1" aria-label="아군 A1에게 큐브 던지기"><i></i><span>A1</span></button>
+        <button class="sim__ally mono" type="button" style="--x:62;--y:26" data-ally="A2" aria-label="아군 A2에게 큐브 던지기"><i></i><span>A2</span></button>
+        <button class="sim__ally mono" type="button" style="--x:72;--y:60" data-ally="A3" aria-label="아군 A3에게 큐브 던지기"><i></i><span>A3</span></button>
+        <p class="sim__hint mono" id="simHint">&gt; 화면을 눌러 큐브를 던지세요 &middot; 아군을 누르면 그 자리로</p>
+        <div class="sim__hud mono">
+          <span>DIAMETER <b id="simD">10</b>m</span>
+          <span>COVER <b id="simC">0</b>/3</span>
+          <span>CONSECUTIVE <b id="simN">0</b></span>
+          <span>STATUS <b id="simS">READY</b></span>
+        </div>
+      </div>
+      <div class="sim__ctrl mono">
+        <button type="button" id="simDeploy">deploy_cube() &rarr; 아군 중심</button>
+        <button type="button" id="simReset">reboot() &middot; 5:00</button>
+      </div>
+      <p class="mono sim__note">// simulator: 화면 한 칸 = 1.25m &middot; 리셋 5분은 5초로 압축해서 보여줍니다</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 TRAITS ============ -->
+<section class="sec" id="s09">
+  <header class="sec__head">
+    <span class="sec__num">09</span>
+    <span class="sec__paren">(Traits)</span>
+    <h2 class="sec__title scramble">특징</h2>
+  </header>
+
+  <div class="traits">
+    <article class="trait trait--wide">
+      <p class="mono card__idx">9.1 &mdash; Hacking</p>
+      <p class="trait__big">"심심해서 뚫어봤다."</p>
+      <p>해킹을 취미로 하지만 꽤나 실력이 있는 듯하다. 본인은 그저 취미 취급을 하지만, 실제로는 정부 내부 방화벽의 취약점을 찾아내 역으로 패치 제안서를 찔러 넣었을 정도로 뛰어난 분석 및 침투 실력을 갖추고 있다.</p>
+    </article>
+    <article class="trait">
+      <p class="mono card__idx">9.2 &mdash; Hobby</p>
+      <ul class="trait__list">
+        <li>구시대 하드웨어 분해 및 개조</li>
+        <li>최신 보안 프로그램 역공학(리버싱)</li>
+        <li>벤치마크 테스트 구동</li>
+      </ul>
+    </article>
+    <article class="trait">
+      <p class="mono card__idx">9.3 &mdash; Habit</p>
+      <p>극심한 손가락 과활동 증세를 보인다. 키보드나 단말기를 쥐고 있지 않을 때도 허공이나 자신의 허벅지 위에서 쇼팽의 에튀드를 연주하듯 끊임없이 열 손가락을 타닥타닥 움직인다.</p>
+      <div class="keys mono" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 10 INVENTORY ============ -->
+<section class="sec" id="s10">
+  <header class="sec__head">
+    <span class="sec__num">10</span>
+    <span class="sec__paren">(Inventory)</span>
+    <h2 class="sec__title scramble">소지품</h2>
+  </header>
+
+  <div class="inv">
+    <div class="inv__item">
+      <p class="mono card__idx">10.1</p>
+      <p class="inv__name">가상현실 장갑</p>
+      <p class="mono dim">VR_GLOVE // conductive panel</p>
+    </div>
+    <div class="inv__item">
+      <p class="mono card__idx">10.2</p>
+      <p class="inv__name">핫픽스 큐브</p>
+      <p class="mono dim pink">ERROR_CUBE // neon pink</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 LINK ============ -->
+<section class="sec" id="s11">
+  <header class="sec__head">
+    <span class="sec__num">11</span>
+    <span class="sec__paren">(Link)</span>
+    <h2 class="sec__title scramble">선관</h2>
+  </header>
+
+  <div class="link">
+    <div class="link__who">
+      <p class="mono card__idx">11.1 &mdash; Linked subject</p>
+      <!-- ============ 선관 링크: 이 부분을 수정해주세요 ============
+           아래 href="#" 의 # 를 선관 캐릭터 사이트 주소로 바꾸면,
+           이름을 눌렀을 때 그 사이트가 새 탭으로 열립니다.
+           예) href="https://계정이름.github.io/저장소이름/"
+           # 그대로 두면 눌러도 아무 일도 일어나지 않습니다.
+           ============================================================ -->
+      <a class="link__name link__a" href="#" target="_blank" rel="noopener">쿠드랴프카 세베랴노비치 이바노프</a>
+      <!-- ============ 선관 링크 수정 끝 ============ -->
+      <p class="link__quote">[ 쿠드랴, 뭔가 재밌는거 없어? ]</p>
+      <dl class="link__meta mono">
+        <div><dt>11.2 &mdash; 지향 커플링</dt><dd>&minus;</dd></div>
+      </dl>
+    </div>
+    <div class="link__body">
+      <p class="mono card__idx">11.3 &mdash; Relation log</p>
+      <p class="link__desc">범죄자의 누명을 쓸 뻔한 녀석의 전산 기록을 손질해 빼내 주며 알게 되었다. 규정 타령이나 하는 고지식함이 기가 차면서도, 그 원칙주의와 공간 도약 능력이 흥미로워 종종 커피를 들고 찾아간다. 매번 깐족대며 장난을 치지만, 동생을 지키려는 녀석의 우직한 책임감은 확실히 신뢰한다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OATH ============ -->
+<section class="oath" aria-label="입단 각오">
+  <p class="mono oath__label">(Oath) &mdash; 입단 각오</p>
+  <p class="oath__text" id="oath">[ 방치하면 무너질 게 뻔한 시스템을 그냥 보고만 있는 건 제 성미에 안 맞아서요. 질서 수호 같은 거창한 명분은 됐고, 인과관계가 맞는 일에만 제 연산 능력을 빌려드리겠습니다. 대신 리셋 타임 5분 동안 저 버려두고 도망가지나 마시죠. 그 규칙만 지켜주시면 제 큐브는 언제든 최우선으로 깔아드립니다. ]</p>
+  <p class="oath__owner">&ldquo;잘 부탁 드립니다.&rdquo;</p>
+</section>
+
+<!-- ============ FOOTER / DOC LINK ============ -->
+<footer class="end">
+  <a class="end__link" href="https://docs.google.com/document/d/1mQiWOn0bs2Uu2od8ZSqLZsz_IyLvNOOZQxRkrFOKN-I/edit?usp=sharing" target="_blank" rel="noopener">
+    <span class="mono end__pre">&gt; open full_document --source=google_docs</span>
+    <span class="end__big" data-fit><span class="glitch-hover" data-text="READ FULL DOC">READ FULL DOC</span></span>
+    <span class="end__sub">본문 전체 보기 &mdash; Google Docs</span>
+    <span class="end__arrow" aria-hidden="true">&#8599;</span>
+  </a>
+  <div class="end__meta mono">
+    <span class="end__faction"><img src="assets/sapientia_symbol.png" alt="" aria-hidden="true" width="20" height="20">Grand Harmony Directorate &middot; Sapientia 사피엔티아</span>
+    <span>Profile art (temp) &mdash; @NUEH_NANA</span>
+    <span>&copy; 2026 &middot; no bug-free code</span>
+  </div>
+</footer>
+
+</main>
+
+<script src="assets/main.js"></script>
+</body>
+</html>
