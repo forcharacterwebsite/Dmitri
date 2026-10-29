@@ -336,6 +336,8 @@ body.is-gated main,body.is-gated .nav,body.is-gated .progress{visibility:hidden}
 .skill__name{font-weight:700;font-size:clamp(20px,2.4vw,34px);letter-spacing:-.035em;line-height:1.2}
 .skill__tags{display:flex;gap:8px}
 .skill__tags em{color:var(--dim)}
+.skill__tags em.kw{color:var(--em);border:1px solid rgba(62,224,143,.5);padding:2px 8px;font-style:normal}
+.skill p.skill__meta{padding-bottom:10px;color:var(--em);font-size:12px}
 .skill__toggle{position:relative;width:18px;height:18px;justify-self:end}
 .skill__toggle::before,.skill__toggle::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;background:var(--fg);transition:transform .3s}
 .skill__toggle::after{transform:rotate(90deg)}
@@ -587,7 +589,8 @@ body.is-crash main{animation:crash .9s steps(1),crash-shift .9s steps(1)}
   .card,.lhs__col,.inv__item,.trait,.panic__side{border-right:0;padding-left:0 !important;border-left:0 !important}
   .card+.card,.lhs__col+.lhs__col,.inv__item+.inv__item,.panic__side+.panic__side{border-top:1px solid var(--line)}
   .skill summary{grid-template-columns:40px 1fr 24px;gap:10px}
-  .skill__type,.skill__tags{display:none}
+  .skill__type{display:none}
+  .skill__tags{grid-column:2/-1;grid-row:2}
   .skill p{padding-left:50px}
   .sim{position:static}
   .radar{margin:0 auto}
