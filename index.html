@@ -7,14 +7,9 @@
 <meta name="description" content="Grand Harmony Directorate 사피엔티아 입단 신청서 — 드미트리 드미트리예비치 쇼스타코비치">
 <meta property="og:title" content="DMITRI // SAPIENTIA-26">
 <meta property="og:description" content="버그 없는 코드는 없습니다. — Grand Harmony Directorate 사피엔티아 입단 신청서">
-<!-- 미리보기 그림: 사이트 주소가 정해지면 content를 전체 주소로 바꾸면 더 확실하다 (예: https://아이디.github.io/저장소/assets/og.png) -->
-<meta property="og:image" content="assets/og.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="assets/profile.png">
 <meta name="theme-color" content="#0a0a0a">
-<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="icon" href="assets/profile.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -33,7 +28,6 @@
       <p class="gate__sub mono">&gt; audio_output: enabled</p>
       <p class="gate__text" id="gateSoundText">이 페이지에는 배경 음악이 나옵니다. 들어가기 전에 기기의 소리를 줄여 주세요. 소리 없이 보고 싶다면 &lsquo;소리 끄고 보기&rsquo;를 누르세요. 들어간 뒤에도 오른쪽 위 SOUND 버튼으로 언제든 켜고 끌 수 있습니다.</p>
     </div>
-    <p class="gate__hint mono">&gt; 이 페이지 곳곳에 능력의 흔적이 숨어 있습니다. 찾아보세요.</p>
     <div class="gate__timer mono" aria-live="polite">
       <div class="gate__bar"><span id="gateBar"></span></div>
       <span id="gateStatus">경고 확인 중 &hellip; 3</span>
@@ -56,7 +50,6 @@
 
 <!-- ============ BOOT LOADER ============ -->
 <div class="boot" id="boot" aria-hidden="true">
-  <div class="boot__mark"><img src="assets/sapientia_symbol.png" alt=""><span>SAPIENTIA<br>사피엔티아</span></div>
   <pre class="boot__log" id="bootLog"></pre>
   <div class="boot__bar"><span id="bootBar"></span></div>
   <div class="boot__pct" id="bootPct">000</div>
@@ -69,7 +62,7 @@
 <header class="nav">
   <a class="nav__brand glitch-hover" href="#top" data-text="GHD/SAPIENTIA">GHD/SAPIENTIA</a>
   <nav class="nav__index" aria-label="섹션">
-    <a href="#s01">01</a><a href="#s02">02</a><a href="#s03">03</a><a href="#s04">04</a><a href="#s05">05</a><a href="#s06">06</a><a href="#s07">07</a><a href="#s08">08</a><a href="#s09">09</a><a href="#s10">10</a><a href="#s11">11</a><a href="#s12">12</a>
+    <a href="#s01">01</a><a href="#s02">02</a><a href="#s03">03</a><a href="#s04">04</a><a href="#s05">05</a><a href="#s06">06</a><a href="#s07">07</a><a href="#s08">08</a><a href="#s09">09</a><a href="#s10">10</a><a href="#s11">11</a>
   </nav>
   <div class="nav__meta"><span class="dot"></span><span id="clock">00:00:00</span><span class="nav__loc">CONCORDIA</span>
     <button class="nav__sound" id="soundBtn" type="button" aria-pressed="false" aria-label="배경 음악 켜기/끄기"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span id="soundLabel">SOUND OFF</span></button>
@@ -83,7 +76,7 @@
 <!-- ============ HERO ============ -->
 <section class="hero" aria-label="표지">
   <div class="hero__grid">
-    <div class="hero__label mono"><img class="faction-mark" src="assets/sapientia_symbol.png" alt="" aria-hidden="true" width="22" height="22">(Application)&nbsp;&nbsp;No.&nbsp;026 &mdash; Sapientia Division &middot; 사피엔티아</div>
+    <div class="hero__label mono">(Application)&nbsp;&nbsp;No.&nbsp;026 &mdash; Sapientia Division</div>
 
     <h1 class="hero__title" data-fit>
       <span class="glitch" data-text="DMITRI">DMITRI</span>
@@ -130,19 +123,6 @@
   </div>
 </section>
 
-<!-- ============ FACTION ============ -->
-<section class="sapientia" aria-label="소속 진영 사피엔티아">
-  <div class="sapientia__inner">
-    <img class="sapientia__logo" src="assets/sapientia_symbol.png" alt="사피엔티아 문장. 은빛 고리 위에 펼친 파란 책과 깃펜" width="600" height="600">
-    <div class="sapientia__text">
-      <p class="mono sapientia__cap">(Faction) &mdash; Grand Harmony Directorate</p>
-      <p class="sapientia__name" data-fit><span>SAPIENTIA</span></p>
-      <p class="sapientia__ko">사피엔티아</p>
-      <p class="mono sapientia__note">소속 진영 &middot; Applicant No. 026</p>
-    </div>
-  </div>
-</section>
-
 <!-- ============ 01 IDENTITY ============ -->
 <section class="sec" id="s01">
   <header class="sec__head">
@@ -160,14 +140,6 @@
         <div class="idcard__row"><span>DIV</span><span>SAPIENTIA</span></div>
         <div class="idcard__code"></div>
         <div class="idcard__row dim"><span>ШОСТАКОВИЧ&lt;&lt;ДМИТРИЙ&lt;&lt;&lt;</span></div>
-      </div>
-      <div class="faction">
-        <img class="faction__logo" src="assets/sapientia_symbol.png" alt="사피엔티아 문장. 은빛 고리 위에 펼친 파란 책과 깃펜" width="96" height="96">
-        <div>
-          <p class="mono faction__cap">Faction</p>
-          <p class="faction__en">SAPIENTIA</p>
-          <p class="faction__ko">사피엔티아</p>
-        </div>
       </div>
     </div>
     <table class="ident__table mono">
@@ -303,7 +275,7 @@
 <section class="sec" id="s06">
   <header class="sec__head">
     <span class="sec__num">06</span>
-    <span class="sec__paren">(Attack/Defence)</span>
+    <span class="sec__paren">(Subroutines)</span>
     <h2 class="sec__title scramble">기술</h2>
   </header>
 
@@ -322,21 +294,21 @@
       <summary>
         <span class="mono skill__no">6.2</span>
         <span class="skill__type mono">ATK</span>
-        <span class="skill__name">널 포인터: 렉 스파이크</span>
-        <span class="skill__tags mono"><em>공격/특수</em><em>#광역</em></span>
+        <span class="skill__name">버퍼 오버플로우</span>
+        <span class="skill__tags mono"><em>공격/에너지</em></span>
         <span class="skill__toggle" aria-hidden="true"></span>
       </summary>
-      <p>지면의 접점 좌표에 순간적인 데이터 과부하 신호를 주입해 바닥을 강하게 파열시킨다. 솟구치는 파편과 정전기 충격으로 전방의 적에게 충격을 주며 자세를 무너뜨린다.</p>
+      <p>휴대 단말의 잉여 연산 데이터를 불안정한 파편 형태로 뭉쳐 전방으로 비산시킨다. 정확도는 떨어지지만 다량의 네온빛 데이터 파편이 산탄처럼 퍼져 적의 접근을 차단하고 찰과상을 입힌다.</p>
     </details>
     <details class="skill">
       <summary>
         <span class="mono skill__no">6.3</span>
         <span class="skill__type mono">ATK</span>
-        <span class="skill__name">버퍼 오버플로우</span>
-        <span class="skill__tags mono"><em>공격/에너지</em><em>#연격</em></span>
+        <span class="skill__name">널 포인터: 렉 스파이크</span>
+        <span class="skill__tags mono"><em>공격/특수</em><em>#광역</em></span>
         <span class="skill__toggle" aria-hidden="true"></span>
       </summary>
-      <p>휴대 단말의 잉여 연산 데이터를 불안정한 파편 형태로 뭉쳐 전방으로 비산시킨다. 정확도는 떨어지지만 다량의 네온빛 데이터 파편이 산탄처럼 퍼져 적의 접근을 차단하고 찰과상을 입힌다.</p>
+      <p>지면의 접점 좌표에 순간적인 데이터 과부하 신호를 주입해 바닥을 강하게 파열시킨다. 솟구치는 파편과 정전기 충격으로 전방의 적에게 충격을 주며 자세를 무너뜨린다.</p>
     </details>
     <details class="skill">
       <summary>
@@ -362,18 +334,15 @@
   </header>
 
   <div class="panic">
-    <p class="mono panic__err">FATAL EXCEPTION 0x0000DEAD &mdash; system crash wave / r = 100m &middot; 속성: 특수</p>
+    <p class="mono panic__err">FATAL EXCEPTION 0x0000DEAD &mdash; system crash wave / r = 100m</p>
     <h3 class="panic__title" data-fit><span class="glitch glitch--heavy" data-text="KERNEL PANIC">KERNEL PANIC</span></h3>
     <p class="panic__lead">시전자와 에러 큐브를 매개로 반경 100m 내의 공간에 네온 글리치와 노이즈를 동반한 거대한 시스템 붕괴 파동(System Crash Wave)을 방출한다.</p>
 
-    <div class="panic__run">
-      <button class="btn-trigger mono" id="panicBtn" type="button">&gt; execute kernel_panic --radius=100m</button>
-      <span class="panic__status mono" id="panicStatus" aria-live="polite">idle &middot; 버튼을 눌러 붕괴 파동을 방출하세요</span>
-    </div>
+    <button class="btn-trigger mono" id="panicBtn" type="button">&gt; execute kernel_panic --radius=100m</button>
 
     <div class="panic__split">
       <div class="panic__side">
-        <p class="mono panic__h">7.1 &mdash; 아군 영향 &middot; 시스템 롤백 / 정화</p>
+        <p class="mono panic__h">7.1 &mdash; 아군 영향 &middot; ROLLBACK / 정화</p>
         <ul>
           <li>파동에 닿은 아군의 뇌파 및 감각 데이터를 직전의 안정된 체크포인트로 강제 복구(롤백)한다.</li>
           <li><b>공포, 패닉, 광기, 환각, 세뇌, 도발 등 일체의 감정 및 정신계 상태이상을 즉시 해제</b>한다.</li>
@@ -381,7 +350,7 @@
         </ul>
       </div>
       <div class="panic__side">
-        <p class="mono panic__h">7.2 &mdash; 적군 영향 &middot; 연산 오류 강제 주입 / 무력화</p>
+        <p class="mono panic__h">7.2 &mdash; 적군 영향 &middot; INJECT / 무력화</p>
         <ul>
           <li>범위 내 적들의 중추신경계와 감각 기관에 미처리된 치명적 에러 파편을 강제로 주입한다.</li>
           <li>적들이 시전 중이거나 준비 중이던 모든 행동 및 스킬을 <b>즉시 강제 캔슬</b>시킨다.</li>
@@ -409,27 +378,21 @@
     </div>
 
     <div class="sim" id="sim">
-      <div class="sim__screen" id="simScreen">
-        <div class="sim__ghost" id="simGhost" aria-hidden="true"><span>10m</span></div>
+      <div class="sim__screen">
+        <div class="sim__ghost" aria-hidden="true"><span>10m</span></div>
         <div class="sim__field" id="simField"><span class="sim__cube"></span></div>
-        <span class="sim__throw" id="simThrow" aria-hidden="true"></span>
-        <span class="sim__me mono" style="--x:12;--y:70" aria-hidden="true"><i></i>YOU</span>
-        <button class="sim__ally mono" type="button" style="--x:30;--y:34" data-ally="A1" aria-label="아군 A1에게 큐브 던지기"><i></i><span>A1</span></button>
-        <button class="sim__ally mono" type="button" style="--x:62;--y:26" data-ally="A2" aria-label="아군 A2에게 큐브 던지기"><i></i><span>A2</span></button>
-        <button class="sim__ally mono" type="button" style="--x:72;--y:60" data-ally="A3" aria-label="아군 A3에게 큐브 던지기"><i></i><span>A3</span></button>
-        <p class="sim__hint mono" id="simHint">&gt; 화면을 눌러 큐브를 던지세요 &middot; 아군을 누르면 그 자리로</p>
+        <p class="sim__hint mono" id="simHint">&gt; deploy_cube() 를 눌러 필드를 전개하세요</p>
         <div class="sim__hud mono">
           <span>DIAMETER <b id="simD">10</b>m</span>
-          <span>COVER <b id="simC">0</b>/3</span>
           <span>CONSECUTIVE <b id="simN">0</b></span>
           <span>STATUS <b id="simS">READY</b></span>
         </div>
       </div>
       <div class="sim__ctrl mono">
-        <button type="button" id="simDeploy">deploy_cube() &rarr; 아군 중심</button>
+        <button type="button" id="simDeploy">deploy_cube()</button>
         <button type="button" id="simReset">reboot() &middot; 5:00</button>
       </div>
-      <p class="mono sim__note">// simulator: 화면 한 칸 = 1.25m &middot; 리셋 5분은 5초로 압축해서 보여줍니다</p>
+      <p class="mono sim__note">// simulator: 리셋 5분은 5초로 압축해서 보여줍니다</p>
     </div>
   </div>
 </section>
@@ -494,51 +457,33 @@
     <h2 class="sec__title scramble">선관</h2>
   </header>
 
+  <!-- 선관 1명 = <div class="link"> 블록 하나.
+       선관을 추가하려면 아래 "선관 시작 ~ 선관 끝" 블록을 통째로 복사해 바로 밑에 붙이고,
+       번호(11.1 → 11.2), 이름, 지향 커플링, 관계 설명만 바꾸면 된다. -->
+
+  <!-- ===== 선관 시작 ===== -->
   <div class="link">
     <div class="link__who">
       <p class="mono card__idx">11.1 &mdash; Linked subject</p>
-      <!-- ============ 선관 링크: 이 부분을 수정해주세요 ============
-           아래 href="#" 의 # 를 선관 캐릭터 사이트 주소로 바꾸면,
-           이름을 눌렀을 때 그 사이트가 새 탭으로 열립니다.
-           예) href="https://계정이름.github.io/저장소이름/"
-           # 그대로 두면 눌러도 아무 일도 일어나지 않습니다.
-           ============================================================ -->
-      <a class="link__name link__a" href="https://forcharacterwebsite.github.io/Kudryavka/" target="_blank" rel="noopener">쿠드랴프카 세베랴노비치 이바노프</a>
-      <!-- ============ 선관 링크 수정 끝 ============ -->
-      <p class="link__quote">[ 쿠드랴, 뭔가 재밌는거 없어? ]</p>
+      <p class="link__name">쿠드랴프카 세베랴노비치 이바노프</p>
+      <dl class="link__meta mono">
+        <div><dt>지향 커플링</dt><dd>&minus;</dd></div>
+      </dl>
     </div>
     <div class="link__body">
-      <p class="mono card__idx">11.2 &mdash; Relation log</p>
-      <p class="link__desc"> 화이트 해커 일을 하다가 알게된 사이. 규정 타령이나 하는 고지식함이 기가 차면서도, 그 원칙주의와 공간 도약 능력이 흥미로워 종종 커피를 들고 찾아간다. 매번 깐족대며 장난을 치지만, 녀석의 우직한 책임감은 확실히 신뢰한다.</p>
+      <p class="mono card__idx">Relation log</p>
+      <p class="link__desc">범죄자의 누명을 쓸 뻔한 녀석의 전산 기록을 손질해 빼내 주며 알게 되었다. 규정 타령이나 하는 고지식함이 기가 차면서도, 그 원칙주의와 공간 도약 능력이 흥미로워 종종 커피를 들고 찾아간다. 매번 깐족대며 장난을 치지만, 동생을 지키려는 녀석의 우직한 책임감은 확실히 신뢰한다.</p>
     </div>
   </div>
-    <!-- ============ 추가 선관 ============ -->
-  <div style="margin-top:clamp(40px,6vw,72px);padding:clamp(24px,4vw,40px);border:1px dashed var(--em);display:grid;gap:14px">
-    <p class="mono card__idx">11.3 &mdash; Open slot &middot; 추가 선관</p>
-    <p style="font-weight:800;font-size:clamp(28px,4vw,56px);letter-spacing:-.04em;line-height:1.2">원하시면 갠밴으로 연락 바랍니다.</p>
-  </div>
-</section>
+  <!-- ===== 선관 끝 ===== -->
 
-<!-- ============ 12 COUPLING ============ -->
-<section class="sec" id="s12">
-  <header class="sec__head">
-    <span class="sec__num">12</span>
-    <span class="sec__paren">(Coupling)</span>
-    <h2 class="sec__title scramble">지향 커플링</h2>
-  </header>
-
-  <div class="coupling">
-    <p class="mono card__idx">12.1 &mdash; Preferred coupling</p>
-    <p class="coupling__v" aria-label="없음">&minus;</p>
-    <p class="mono coupling__note">// 지정 없음</p>
-  </div>
 </section>
 
 <!-- ============ OATH ============ -->
 <section class="oath" aria-label="입단 각오">
   <p class="mono oath__label">(Oath) &mdash; 입단 각오</p>
   <p class="oath__text" id="oath">[ 방치하면 무너질 게 뻔한 시스템을 그냥 보고만 있는 건 제 성미에 안 맞아서요. 질서 수호 같은 거창한 명분은 됐고, 인과관계가 맞는 일에만 제 연산 능력을 빌려드리겠습니다. 대신 리셋 타임 5분 동안 저 버려두고 도망가지나 마시죠. 그 규칙만 지켜주시면 제 큐브는 언제든 최우선으로 깔아드립니다. ]</p>
-  <p class="oath__owner">&ldquo;잘 부탁 드립니다.&rdquo;</p>
+  <p class="oath__owner"><span class="mono">(Owner) &mdash; 랑데부</span>잘 부탁 드립니다.</p>
 </section>
 
 <!-- ============ FOOTER / DOC LINK ============ -->
@@ -550,7 +495,8 @@
     <span class="end__arrow" aria-hidden="true">&#8599;</span>
   </a>
   <div class="end__meta mono">
-    <span class="end__faction"><img src="assets/sapientia_symbol.png" alt="" aria-hidden="true" width="20" height="20">Grand Harmony Directorate &middot; Sapientia 사피엔티아</span>
+    <span>Grand Harmony Directorate &middot; Sapientia</span>
+    <span>Owner &mdash; 랑데부</span>
     <span>Profile art (temp) &mdash; @NUEH_NANA</span>
     <span>&copy; 2026 &middot; no bug-free code</span>
   </div>
@@ -558,9 +504,6 @@
 
 </main>
 
-<!-- KERNEL PANIC 연출용 (버튼을 누를 때만 그려짐) -->
-<canvas class="crashfx" id="crashFx" aria-hidden="true"></canvas>
-<div class="crashdump mono" id="crashDump" aria-hidden="true"><p class="crashdump__k">*** STOP: 0x0000DEAD &mdash; KERNEL_PANIC</p><p class="crashdump__t">SYSTEM CRASH WAVE</p><p class="crashdump__r">radius <b id="crashR">000</b>m / 100m</p><p class="crashdump__l">allies &rarr; rollback &middot; enemies &rarr; inject</p></div>
 <script src="assets/main.js"></script>
 </body>
 </html>
